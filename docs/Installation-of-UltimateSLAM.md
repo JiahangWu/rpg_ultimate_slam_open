@@ -26,7 +26,7 @@ Please replace `kinetic` with your version of ROS (e.g. `melodic`).
 Clone the UltimateSLAM repository and run `vcstool` to automatically import the dependencies:
 
     cd src/
-    git clone git@github.com:uzh-rpg/rpg_ultimate_slam_open.git
+    git clone git@github.com:JiahangWu/rpg_ultimate_slam_open.git
     vcs-import < rpg_ultimate_slam_open/dependencies.yaml
 
 Finally, build UltimateSLAM:

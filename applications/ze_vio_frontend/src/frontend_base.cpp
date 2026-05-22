@@ -43,12 +43,12 @@ DEFINE_double(vio_ransac_relpose_thresh_px, 2,
               "Relative pose RANSAC reprojection error threshold [px].");
 DEFINE_bool(vio_use_5pt_ransac, false,
             "Use 5-point ransac. Alternative is 2-point RANSAC with gyro prior.");
-DEFINE_double(vio_acc_bias_init_x, 0.0, "Acc bias [temporary].");
-DEFINE_double(vio_acc_bias_init_y, 0.0, "Acc bias [temporary].");
-DEFINE_double(vio_acc_bias_init_z, 0.0, "Acc bias [temporary].");
-DEFINE_double(vio_gyr_bias_init_x, 0.0, "Gyro bias [temporary].");
-DEFINE_double(vio_gyr_bias_init_y, 0.0, "Gyro bias [temporary].");
-DEFINE_double(vio_gyr_bias_init_z, 0.0, "Gyro bias [temporary].");
+DECLARE_double(vio_acc_bias_init_x);
+DECLARE_double(vio_acc_bias_init_y);
+DECLARE_double(vio_acc_bias_init_z);
+DECLARE_double(vio_gyr_bias_init_x);
+DECLARE_double(vio_gyr_bias_init_y);
+DECLARE_double(vio_gyr_bias_init_z);
 DEFINE_bool(vio_log_performance, false,
             "Log additional performance statistics, e.g., number of tracked features.");
 

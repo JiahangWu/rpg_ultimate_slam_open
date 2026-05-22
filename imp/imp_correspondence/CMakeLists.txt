@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 2.8.0)
 
 find_package(catkin_simple REQUIRED)
 catkin_simple(ALL_DEPS_REQUIRED)
+find_package(OpenCV REQUIRED)
+list(APPEND catkin_LIBRARIES ${OpenCV_LIBRARIES})
 
 include(ze_setup)
 
@@ -25,9 +27,11 @@ set(SOURCES
   src/sparse_stereo.cpp
   )
 
-IF(DEFINED ENV{ARM_ARCHITECTURE})
+if(CMAKE_SYSTEM_PROCESSOR MATCHES "^(arm64|aarch64)$")
   LIST(APPEND SOURCES src/klt_neon.cpp)
-ENDIF()
+elseif(DEFINED ENV{ARM_ARCHITECTURE})
+  LIST(APPEND SOURCES src/klt_neon.cpp)
+endif()
 
 cs_add_library(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 
@@ -55,4 +59,3 @@ target_link_libraries(test_sparse_stereo ${PROJECT_NAME})
 ##########
 cs_install()
 cs_export()
-

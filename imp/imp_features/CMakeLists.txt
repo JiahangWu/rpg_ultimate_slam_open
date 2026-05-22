@@ -37,11 +37,13 @@ if(ZE_USE_BRISK)
     src/brisk_descriptor.cpp)
 endif()
 
-IF(DEFINED ENV{ARM_ARCHITECTURE})
+if(CMAKE_SYSTEM_PROCESSOR MATCHES "^(arm64|aarch64)$")
+  LIST(APPEND SOURCES src/fast_masked_fallback.cpp)
+elseif(DEFINED ENV{ARM_ARCHITECTURE})
   LIST(APPEND SOURCES src/fast_masked_neon.cpp)
-ELSE()
+else()
   LIST(APPEND SOURCES src/fast_masked_sse.cpp)
-ENDIF()
+endif()
 
 cs_add_library(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 
@@ -65,4 +67,3 @@ target_link_libraries(test_occupancy_grid_2d ${PROJECT_NAME})
 ##########
 cs_install()
 cs_export()
-

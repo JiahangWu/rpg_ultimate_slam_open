@@ -17,29 +17,34 @@ if (CMAKE_USE_PTHREADS_INIT)
 endif ()
 
 # arm
-if(DEFINED ENV{ARM_ARCHITECTURE})
+if(CMAKE_SYSTEM_PROCESSOR MATCHES "^(arm64|aarch64)$")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+elseif(DEFINED ENV{ARM_ARCHITECTURE})
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mfpu=neon -march=armv7-a")
   add_definitions(-DHAVE_FAST_NEON)
 else()
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mmmx -msse -msse -msse2 -msse3 -mssse3")
 endif()
 
-# c++11
+# c++14
 if (CMAKE_VERSION VERSION_LESS "3.1" OR Boost_VERSION VERSION_LESS "1.56")
   if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    set (CMAKE_CXX_FLAGS "--std=gnu++11 ${CMAKE_CXX_FLAGS}")
+    set (CMAKE_CXX_FLAGS "--std=gnu++14 ${CMAKE_CXX_FLAGS}")
   elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -stdlib=libc++")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -stdlib=libc++")
   else ()
     message(SEND_ERROR "Unknown or unsupported system.")
   endif ()
 else ()
-  set (CMAKE_CXX_STANDARD 11)
+  set (CMAKE_CXX_STANDARD 14)
 endif ()
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -std=c++14")
 
 # RT library
 find_library(RT_LIBRARY NAMES rt librt)
-list(APPEND ZE_LIBRARIES ${RT_LIBRARY})
+if(RT_LIBRARY)
+  list(APPEND ZE_LIBRARIES ${RT_LIBRARY})
+endif()
 
 # forward pure cmake dependencies if not added by <depend> in the package xml
 # but should be forwarded from/to the packages

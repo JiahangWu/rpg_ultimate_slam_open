@@ -58,6 +58,7 @@ struct move_popper
 };
 
 // Will come with c++14
+#if __cplusplus < 201402L
 namespace std {
 
 template< bool B, class T, class F >
@@ -67,6 +68,7 @@ template< bool B, class T = void >
 using enable_if_t = typename enable_if<B,T>::type;
 
 } // namespace std
+#endif
 
 template<bool B>
 using EnableIfB = typename std::enable_if<B, int>::type;
@@ -184,9 +186,9 @@ public:
     size_ = size_ + (front_idx_ - front_idx);
     front_idx_ = front_idx;
   }
-  void reset_size(size_type size_)
+  void reset_size(size_type new_size)
   {
-    size_ = size;
+    size_ = new_size;
   }
 
   // state indicators

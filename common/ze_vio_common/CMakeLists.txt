@@ -39,6 +39,7 @@ set(SOURCES
   src/landmark_triangulation.cpp
   src/landmark_types.cpp
   src/landmark_utils.cpp
+  src/vio_gflags.cpp
   src/vio_visualizer.cpp
   )
 
